@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:app_fluter_1/dados/info.dart';
+import 'package:app_fluter_1/tela/tela_Inicial.dart';
+//import 'package:app_fluter_1/tela/tela_formulario.dart';  
 import 'package:flutter/material.dart';
-import 'tela/tela_Inicial.dart';
-
 void main() {
   runApp(MyApp());
 }
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TelaInicial(),
+      home: TaskDados(child: const TelaInicial()),
     );
   }
 }

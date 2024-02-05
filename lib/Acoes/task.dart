@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dificulty.dart';
 
+// ignore: must_be_immutable
 class Tasks extends StatefulWidget {
   final String nome;
   final String foto;
   final int dificuldade;
-  const Tasks(this.nome, this.foto,this.dificuldade, {Key? key}) : super(key: key);
+  Tasks(this.nome, this.foto,this.dificuldade, {Key? key}) : super(key: key);
+
+  int nivel = 0;
 
   @override
   State<Tasks> createState() => _TasksState();
@@ -13,7 +16,13 @@ class Tasks extends StatefulWidget {
 
 class _TasksState extends State<Tasks> {
 
-  int nivel = 0;
+
+  bool assetOrNetwork(){
+    if(widget.foto.contains('ttps')){
+      return false;
+    }
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,7 +33,7 @@ class _TasksState extends State<Tasks> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.blue,
-            ),
+              ),
             height: 140,
           ),
           Column(
@@ -47,9 +56,9 @@ class _TasksState extends State<Tasks> {
                       width: 72,
                       height: 100,
                       child: ClipRRect( borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(widget.foto,
+                        child: assetOrNetwork() ? Image.asset(widget.foto,
                           fit: BoxFit.cover,
-                        ),
+                        ) : Image.network(widget.foto, fit: BoxFit.cover,)
                       ),
                     ),
                     Column(
@@ -76,7 +85,7 @@ class _TasksState extends State<Tasks> {
                         child: ElevatedButton(
                           onPressed: (){
                             setState((){
-                              nivel++;
+                              widget.nivel++;
                             });
 
                           },
@@ -108,14 +117,14 @@ class _TasksState extends State<Tasks> {
                       width: 200,
                       child: LinearProgressIndicator(
                         color: Colors.white,
-                        value: widget.dificuldade > 0 ? (nivel/widget.dificuldade)/10 : 1,
+                        value: widget.dificuldade > 0 ? (widget.nivel/widget.dificuldade)/10 : 1,
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      'Nivel: $nivel',
+                      'Nivel: ${widget.nivel}',
                       style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
